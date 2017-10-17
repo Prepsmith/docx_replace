@@ -15,8 +15,8 @@ module DocxReplace
       read_docx_files
     end
 
-    def replace(pattern, replacement, multiple_occurrences=false)
-      replace = replacement.to_s.encode(xml: :text)
+    def replace(pattern, replacement, multiple_occurrences = false, inject_xml = false)
+      replace = inject_xml ? replacement.to_s : replacement.to_s.encode(xml: :text)
       @document_contents.each do |path, document|
         if multiple_occurrences
           document.force_encoding("UTF-8").gsub!(pattern, replace)
